@@ -2,7 +2,7 @@
  * @Author: xiaoyou
  * @Date: 2020-02-01 13:37:46
  * @Last Modified by: xiaoyou
- * @Last Modified time: 2020-02-01 14:00:52
+ * @Last Modified time: 2020-02-01 15:32:01
  */
 import * as React from "react";
 import Routes from "./routes";
@@ -13,25 +13,28 @@ import { Layout } from "antd";
 
 const { Content, Footer } = Layout;
 
-type AppProps = {};
+interface S {
+  collapsed: boolean;
+  title: string;
+}
 
-class App extends React.Component<AppProps> {
-  state = {
+class App extends React.Component<any, S> {
+  public readonly state: Readonly<S> = {
     collapsed: false,
     title: ""
   };
-  getClientWidth = () => {
+  public getClientWidth = () => {
     // 获取当前浏览器宽度并设置responsive管理响应式
     const clientWidth = window.innerWidth;
     console.log(clientWidth);
     // receiveData({isMobile: clientWidth <= 992}, 'responsive');
   };
-  toggle = () => {
+  public toggle = () => {
     this.setState({
       collapsed: !this.state.collapsed
     });
   };
-  render() {
+  public render() {
     return (
       <Layout style={{ width: "100%", height: "100vh", overflow: "hidden" }}>
         {/* {!responsive.data.isMobile && checkLogin(auth.data.permissions) && ( */}

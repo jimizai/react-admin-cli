@@ -10,16 +10,16 @@ type SiderCustomProps = RouteComponentProps<any> & {
   popoverHide?: () => void;
   collapsed?: boolean;
 };
-type SiderCustomState = {
+interface SiderCustomState {
   collapsed?: boolean | undefined;
   openKeys: string[];
   firstHide: boolean | undefined;
   selectedKey: string;
   mode: string;
-};
+}
 
 class SiderCustom extends Component<SiderCustomProps, SiderCustomState> {
-  constructor(props: any) {
+  public constructor(props: any) {
     super(props);
     this.state = {
       mode: "inline",
@@ -29,9 +29,10 @@ class SiderCustom extends Component<SiderCustomProps, SiderCustomState> {
     };
   }
 
-  componentDidUpdate(prevProps: SiderCustomProps) {
+  public componentDidUpdate(prevProps: SiderCustomProps) {
     if (this.props.collapsed !== this.state.collapsed) {
       const { collapsed } = this.props;
+      // eslint-disable-next-line
       this.setState({
         ...this.getOpenAndSelectKeys(),
         collapsed,
@@ -40,11 +41,12 @@ class SiderCustom extends Component<SiderCustomProps, SiderCustomState> {
       });
     }
     if (prevProps.location.pathname !== this.props.location.pathname) {
+      // eslint-disable-next-line
       this.setState({ ...this.getOpenAndSelectKeys() });
     }
   }
 
-  getOpenAndSelectKeys() {
+  public getOpenAndSelectKeys() {
     const { location } = this.props;
     const { pathname } = location;
     return {
@@ -53,7 +55,7 @@ class SiderCustom extends Component<SiderCustomProps, SiderCustomState> {
     };
   }
 
-  recombineOpenKeys = (openKeys: string[]) => {
+  public recombineOpenKeys = (openKeys: string[]) => {
     let i = 0;
     let strPlus = "";
     let tempKeys: string[] = [];
@@ -65,20 +67,19 @@ class SiderCustom extends Component<SiderCustomProps, SiderCustomState> {
     return tempKeys;
   };
 
-  menuClick = (e: any) => {
+  public menuClick = (e: any) => {
     this.setState({
       selectedKey: e.key
     });
-    const { popoverHide } = this.props; // 响应式布局控制小屏幕点击菜单时隐藏菜单操作
-    popoverHide && popoverHide();
+    this.props.popoverHide && this.props.popoverHide();
   };
-  openMenu = (v: string[]) => {
+  public openMenu = (v: string[]) => {
     this.setState({
       openKeys: v,
       firstHide: false
     });
   };
-  render() {
+  public render() {
     const { selectedKey, openKeys, firstHide, collapsed } = this.state;
     return (
       <Sider

@@ -2,7 +2,7 @@
  * @Author: xiaoyou
  * @Date: 2020-02-01 13:37:43
  * @Last Modified by: xiaoyou
- * @Last Modified time: 2020-02-01 13:58:06
+ * @Last Modified time: 2020-02-01 15:30:59
  */
 import * as React from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
@@ -11,22 +11,20 @@ import routesConfig, { IFMenuBase, IFMenu } from "./config";
 import queryString from "query-string";
 import { checkLogin } from "../utils";
 
-type CRouterProps = {};
-
-export default class CRouter extends React.Component<CRouterProps> {
-  getPermits = (): any[] | null => {
+export default class CRouter extends React.Component {
+  public getPermits = (): any[] | null => {
     // const { auth } = this.props;
     // return auth ? auth.data.permissions : null;
     return null;
   };
 
-  requireAuth = (permit: any, component: React.ReactElement) => {
+  public requireAuth = (permit: any, component: React.ReactElement) => {
     // const permits = this.getPermits();
     // const { auth } = store.getState().httpData;
     // if (!permits || !permits.includes(permit)) return <Redirect to={"404"} />;
     return component;
   };
-  requireLogin = (component: React.ReactElement, permit: any) => {
+  public requireLogin = (component: React.ReactElement, permit: any) => {
     const permits = this.getPermits();
     if (!checkLogin(permits)) {
       // 线上环境判断是否登录
@@ -35,7 +33,7 @@ export default class CRouter extends React.Component<CRouterProps> {
     return permit ? this.requireAuth(permit, component) : component;
   };
 
-  createRoute = (key: string) => {
+  public createRoute = (key: string) => {
     return routesConfig[key].map((r: IFMenu) => {
       const route = (r: IFMenuBase) => {
         const Component = r.component && AllComponents[r.component];
@@ -78,7 +76,7 @@ export default class CRouter extends React.Component<CRouterProps> {
     });
   };
 
-  render() {
+  public render() {
     return (
       <Switch>
         {Object.keys(routesConfig).map(key => this.createRoute(key))}
