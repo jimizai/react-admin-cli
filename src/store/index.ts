@@ -4,6 +4,7 @@ import reducer from "./reducer";
 
 declare global {
   interface Window {
+    // eslint-disable-next-line
     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
   }
 }
